@@ -34,7 +34,7 @@ class User(AbstractUser):
     email = models.EmailField(_('Email Address'), unique=True)
     first_name = models.CharField(max_length=50, verbose_name=_("First Name"))
     last_name = models.CharField(max_length=50, verbose_name=_("Last Name"))
-    balance = models.DecimalField(max_digits=8, decimal_places=2, verbose_name=_('Balance'))
+    balance = models.DecimalField(max_digits=8, decimal_places=2, verbose_name=_('Balance'), null=True, blank=True)
     mobile_number = models.CharField(max_length=20, verbose_name=_("Mobile Number"))
 
     objects = UserManager()
@@ -43,3 +43,4 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
