@@ -31,8 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'tickets.apps.TicketsAppConfig',
+    'tickets_app.apps.TicketsAppConfig',
     'users.apps.UsersConfig',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,4 +122,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = "home"
+LOGIN_URL = "login"

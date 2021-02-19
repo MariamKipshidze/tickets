@@ -1,0 +1,26 @@
+{% extends "tickets_app/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class = "content-section">
+  <h2>{{user.first_name}}</h2>
+  <p><strong> Number:</strong> {{user.mobile_number}}</p>
+  <p><strong>Fixed salary:</strong> {{employee.salary}}</p>
+</div>
+<div class = "content-section">
+    <div>
+    <form method = "GET" action=".">
+      {{tickets_search_form|crispy}}
+      <div class = "form-group">
+          <button class = "btn btn-outline-info" type = "submit">Filter</button>
+          {% if spent_money %}
+            <p><strong>Spent money:</strong>  {{spent_money|floatformat:2}} </p>
+          {% endif %}
+      </div>
+    </form>
+    </div>
+    {% for order in orders %}
+      <p>{{order.ticket}} | {{order.ticket.start_date|date:"F d, Y"}} </p>
+    {% endfor %}
+</div>
+
+{% endblock content%}
