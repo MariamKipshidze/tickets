@@ -4,7 +4,7 @@ from users.models import User
 
 
 class Ticket(models.Model):
-    name = models.CharField(max_length=100, verbose_name=_("Name")),
+    name = models.CharField(max_length=100, verbose_name=_("Name"), default="1")
     price = models.DecimalField(max_digits=4, decimal_places=2, verbose_name=_('Price'))
     start_date = models.DateTimeField(verbose_name=_("Start Date"))
     end_date = models.DateTimeField(verbose_name=_("End date"))
