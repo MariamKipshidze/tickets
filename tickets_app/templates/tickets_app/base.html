@@ -27,6 +27,7 @@
               <div class="navbar-nav">
                 {% if user.is_authenticated %}
                   <a class="nav-item nav-link" href="{% url 'orders' %}">Orders</a>
+                  <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 {% endif %}
               </div>
             </div>
