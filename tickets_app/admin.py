@@ -3,9 +3,9 @@ from .models import Order, Ticket
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["ticket", "user"]
+    list_display = ["user", "ticket"]
 
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display =["name"]
+    list_display =["barcode", "name","price"]

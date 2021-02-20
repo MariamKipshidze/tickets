@@ -4,7 +4,7 @@ from users.models import User
 
 
 class Ticket(models.Model):
-    name = models.CharField(max_length=100, verbose_name=_("Name"), default="1")
+    name = models.CharField(max_length=100, verbose_name=_("Name"))
     price = models.DecimalField(max_digits=4, decimal_places=2, verbose_name=_('Price'))
     start_date = models.DateTimeField(verbose_name=_("Start Date"))
     end_date = models.DateTimeField(verbose_name=_("End date"))
@@ -23,7 +23,7 @@ class Order(models.Model):
     ticket = models.OneToOneField(Ticket, verbose_name=("Ticket"), on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.ticket
+        return self.user.email
 
     class Meta:
         verbose_name = _('Order')
