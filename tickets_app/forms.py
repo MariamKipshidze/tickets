@@ -6,7 +6,7 @@ class TicketsSearchForm(forms.Form):
     order_search = forms.ChoiceField(choices=CHOICE, required=False)
 
 
-class OrderCreateForm(forms.Form):
+class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ["ticket"]
