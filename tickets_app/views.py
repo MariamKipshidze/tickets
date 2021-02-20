@@ -20,6 +20,11 @@ def orders(request: WSGIRequest) -> HttpResponse:
     user = request.user
     orders = Order.objects.filter(user=user)
 
+    q = request.GET.get('q')
+
+    if q:
+        orders = Order.objects.filter(Q(ticket__name__icontains=q), Q(user=user))
+
     page = request.GET.get('page', 1)
     paginator = Paginator(orders, 5)
     try:

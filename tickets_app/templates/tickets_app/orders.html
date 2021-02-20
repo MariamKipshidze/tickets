@@ -1,32 +1,39 @@
 {% extends "tickets_app/base.html" %}
 {% block content %}
 
-{% for order in orders %}
-    <div class = "content-section">
-        <p>{{order.ticket}}</p>
-    </div>
-{% endfor %}
+<form method="GET" action="orders">
+  Search ticket name
+  <div class = "form-group">
+      <input class = "textinput textInput form-control" id="search_order" type="text" name="q" value="{{ request.GET.q }}">
+      <button class = "btn btn-outline-info" >Search</button>
+  </div>
+</form>
+  {% for order in orders %}
+      <div class = "content-section">
+          <p>{{order.ticket}}</p>
+      </div>
+  {% endfor %}
 
-{% if orders.has_other_pages %}
-    <ul class="pagination">
-      {% if orders.has_previous %}
-        <li><a href="?page={{ orders.previous_page_number }}">&laquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&laquo;</span></li>
-      {% endif %}
-      {% for i in orders.paginator.page_range %}
-        {% if orders.number == i %}
-          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+  {% if orders.has_other_pages %}
+      <ul class="pagination">
+        {% if orders.has_previous %}
+          <li><a href="?page={{ orders.previous_page_number }}">&laquo;</a></li>
         {% else %}
-          <li><a href="?page={{ i }}">{{ i }}</a></li>
+          <li class="disabled"><span>&laquo;</span></li>
         {% endif %}
-      {% endfor %}
-      {% if orders.has_next %}
-        <li><a href="?page={{ orders.next_page_number }}">&raquo;</a></li>
-      {% else %}
-        <li class="disabled"><span>&raquo;</span></li>
-      {% endif %}
-    </ul>
-{% endif %}
+        {% for i in orders.paginator.page_range %}
+          {% if orders.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if orders.has_next %}
+          <li><a href="?page={{ orders.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+  {% endif %}
 
 {% endblock content%}
