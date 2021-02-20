@@ -16,7 +16,8 @@ from django.db.models import Q, Sum
 
 @login_required
 def orders(request: WSGIRequest) -> HttpResponse:
-    orders = Order.objects.all()
+    user = request.user
+    orders = Order.objects.filter(user=user)
 
     return render(request, "tickets_app/orders.html", context={
         "orders": orders,

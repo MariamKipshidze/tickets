@@ -1,4 +1,10 @@
 {% extends "tickets_app/base.html" %}
 {% block content %}
 
+{% for order in orders %}
+    <div class = "content-section">
+        <p>{{order.ticket}}</p>
+    </div>
+{% endfor %}
+
 {% endblock content%}
