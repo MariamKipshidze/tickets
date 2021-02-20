@@ -6,11 +6,10 @@
     <form method = "POST">
         {% csrf_token %}
         <fieldset class = "form-group">
-            <legend class = "border-bottom mb-4">Create Order</legend>
             {{order_form|crispy}}
         </fieldset>
         <div class = "form-group">
-            <button class = "btn btn-outline-info" type = "submit">Order</button>
+            <button class = "btn btn-outline-info" type = "submit">Buy</button>
         </div>
     </form>
 </div>
