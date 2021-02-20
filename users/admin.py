@@ -10,7 +10,7 @@ class Useradmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'status', 'user_permissions'),
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions'),
         }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
@@ -18,7 +18,7 @@ class Useradmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': (
-            'email', 'password1', 'password2',),
+            'email', 'password1', 'password2', "first_name", "last_name", "mobile_number"),
         }),
     )
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')

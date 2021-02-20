@@ -8,4 +8,4 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display =["barcode", "name","price"]
+    list_display =["barcode", "name", "price"]

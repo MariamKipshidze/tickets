@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class = "content-section">
-  <h2>{{user.first_name}}</h2>
-  <p><strong> Number:</strong> {{user.mobile_number}}</p>
-  <p><strong>Fixed salary:</strong> {{employee.salary}}</p>
+  <h2>{{user.first_name}} {{user.last_name}}</h2>
+  <p><strong>Number:</strong> {{user.mobile_number}}</p>
+  <p><strong>Balance:</strong> {{user.balance}}</p>
 </div>
 <div class = "content-section">
     <div>
