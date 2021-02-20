@@ -12,8 +12,8 @@
       {{tickets_search_form|crispy}}
       <div class = "form-group">
           <button class = "btn btn-outline-info" type = "submit">Filter</button>
-          {% if spent_money %}
-            <p><strong>Spent money:</strong>  {{spent_money|floatformat:2}} </p>
+          {% if orders_info %}
+            <p><strong>Spent money:</strong>  {{orders_info.spent_money}} </p>
           {% endif %}
       </div>
     </form>

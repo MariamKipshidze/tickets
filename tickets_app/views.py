@@ -12,6 +12,7 @@ from django.urls import reverse
 
 import datetime
 from django.utils import timezone
+from django.db.models import Q, Sum
 
 @login_required
 def orders(request: WSGIRequest) -> HttpResponse:
@@ -25,35 +26,32 @@ def orders(request: WSGIRequest) -> HttpResponse:
 @login_required
 def profile(request: WSGIRequest) -> HttpResponse:
     user = request.user
-    tickets = user.order.all()
+    tickets = Ticket.objects.filter(tk_order__user=user)
     tickets_search_form = TicketsSearchForm()
-    #order_info = {}
+    orders_info = {}
 
     if request.method == "GET":
         tickets_search_form = TicketsSearchForm(request.GET)
         if tickets_search_form.is_valid():
             data = tickets_search_form.cleaned_data["order_search"]
             if data == "1":
-                # order_info = user.order.filter(end_date__lte=timezone.now()) \
-                #     .aggregate(
-                #     spent_money=Sum(
-                #         'order',
-                #         filter=Q(start_date__gte=(timezone.now() - datetime.timedelta(weeks=1))))
-                #     ),
-                tickets = Ticket.objects.filter(start_date__gte=(timezone.now()\
-                - datetime.timedelta(weeks=1))).order_by("-start_date")
+                orders_info = Ticket.objects.aggregate(spent_money=Sum("price", filter=Q(tk_order__user=user)))
+                tickets = Ticket.objects.filter(Q(start_date__gte=(timezone.now()\
+                - datetime.timedelta(weeks=1))),Q(tk_order__user=user)).order_by("-start_date")
             elif data == "2":
-                tickets = Ticket.objects.filter(start_date__gte=(timezone.now()\
-                 - datetime.timedelta(days=30))).order_by("-start_date")
+                orders_info = Ticket.objects.aggregate(spent_money=Sum("price", filter=Q(tk_order__user=user)))
+                tickets = Ticket.objects.filter(Q(start_date__gte=(timezone.now()\
+                 - datetime.timedelta(days=30))),Q(tk_order__user=user)).order_by("-start_date")
             elif data == "3":
-                tickets = Ticket.objects.filter(start_date__gte=(timezone.now()\
-                 - datetime.timedelta(days=365))).order_by("-start_date")
+                orders_info = Ticket.objects.aggregate(spent_money=Sum("price", filter=Q(tk_order__user=user)))
+                tickets = Ticket.objects.filter(Q(start_date__gte=(timezone.now()\
+                 - datetime.timedelta(days=365))), Q(tk_order__user=user)).order_by("-start_date")
 
     return render(request, 'tickets_app/profile.html', context={
         "user": user,
         "tickets": tickets,
         "tickets_search_form": tickets_search_form,
-        # **order_info
+        "orders_info": orders_info
     })
 
 

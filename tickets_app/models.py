@@ -20,7 +20,7 @@ class Ticket(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.CASCADE, related_name="order")
-    ticket = models.OneToOneField(Ticket, verbose_name=("Ticket"), on_delete=models.CASCADE, related_name="tk")
+    ticket = models.OneToOneField(Ticket, verbose_name=("Ticket"), on_delete=models.CASCADE, related_name="tk_order")
 
     def __str__(self):
         return self.user.email
