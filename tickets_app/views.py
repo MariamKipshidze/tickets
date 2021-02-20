@@ -102,8 +102,10 @@ def order_create(request: WSGIRequest) -> HttpResponse:
                 user.balance = user.balance - order.ticket.price
                 user.save()
                 order.save
+                messages.success(request, f"Successfully completed")
+            else:
+                messages.warning(request, f"There is not enough money on your balance")
 
-            messages.success(request, f"Successfully booked")
             return HttpResponseRedirect(reverse("profile"))
 
     return render(request, "tickets_app/order_form.html", context={
