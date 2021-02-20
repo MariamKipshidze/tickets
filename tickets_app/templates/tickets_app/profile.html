@@ -18,8 +18,8 @@
       </div>
     </form>
     </div>
-    {% for order in orders %}
-      <p>{{order.ticket}} | {{order.ticket.start_date|date:"F d, Y"}} </p>
+    {% for ticket in tickets %}
+      <p>{{ticket.name}} | {{ticket.start_date|date:"F d, Y"}} </p>
     {% endfor %}
 </div>
 

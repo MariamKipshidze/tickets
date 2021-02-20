@@ -25,7 +25,7 @@ def orders(request: WSGIRequest) -> HttpResponse:
 @login_required
 def profile(request: WSGIRequest) -> HttpResponse:
     user = request.user
-    orders = user.order.all()
+    tickets = user.order.all()
     tickets_search_form = TicketsSearchForm()
     #order_info = {}
 
@@ -40,18 +40,18 @@ def profile(request: WSGIRequest) -> HttpResponse:
                 #         'order',
                 #         filter=Q(start_date__gte=(timezone.now() - datetime.timedelta(weeks=1))))
                 #     ),
-                orders = user.orders.filter(start_date__gte=(timezone.now()\
+                tickets = Ticket.objects.filter(start_date__gte=(timezone.now()\
                 - datetime.timedelta(weeks=1))).order_by("-start_date")
             elif data == "2":
-                orders = user.orders.filter(start_date__gte=(timezone.now()\
+                tickets = Ticket.objects.filter(start_date__gte=(timezone.now()\
                  - datetime.timedelta(days=30))).order_by("-start_date")
             elif data == "3":
-                orders = user.orders.filter(start_date__gte=(timezone.now()\
+                tickets = Ticket.objects.filter(start_date__gte=(timezone.now()\
                  - datetime.timedelta(days=365))).order_by("-start_date")
 
     return render(request, 'tickets_app/profile.html', context={
         "user": user,
-        "orders": orders,
+        "tickets": tickets,
         "tickets_search_form": tickets_search_form,
         # **order_info
     })
