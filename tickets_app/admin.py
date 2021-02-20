@@ -2,10 +2,10 @@ from django.contrib import admin
 from .models import Order, Ticket
 
 @admin.register(Order)
-class Useradmin(UserAdmin):
+class OrderAdmin(admin.ModelAdmin):
     list_display = ["ticket", "user"]
 
 
 @admin.register(Ticket)
-class Useradmin(UserAdmin):
+class TicketAdmin(admin.ModelAdmin):
     list_display =["name"]
