@@ -97,7 +97,11 @@ def order_create(request: WSGIRequest) -> HttpResponse:
         if order_form.is_valid():
             order = order_form.save(commit=False)
             order.user = user
-            order.save
+
+            if user.balance - order.ticket.price > 0:
+                user.balance = user.balance - order.ticket.price
+                user.save()
+                order.save
 
             messages.success(request, f"Successfully booked")
             return HttpResponseRedirect(reverse("profile"))

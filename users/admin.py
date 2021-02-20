@@ -8,7 +8,7 @@ from users.models import User
 class Useradmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'balance')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions'),
         }),
@@ -18,7 +18,7 @@ class Useradmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': (
-            'email', 'password1', 'password2', "first_name", "last_name", "mobile_number"),
+            'email', 'password1', 'password2', "first_name", "last_name", "mobile_number", "balance"),
         }),
     )
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
