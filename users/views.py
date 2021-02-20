@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import UserCreation
+from django.contrib import messages
 
 
 def user_register(request):
@@ -11,6 +12,6 @@ def user_register(request):
             messages.success(request, f"Account created successfully!")
             return redirect("login")
 
-    return render(request, "tickets_app/register.html", context={
+    return render(request, "users/register.html", context={
         "user_form": user_form
         })

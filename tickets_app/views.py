@@ -61,15 +61,21 @@ def profile(request: WSGIRequest) -> HttpResponse:
         if tickets_search_form.is_valid():
             data = tickets_search_form.cleaned_data["order_search"]
             if data == "1":
-                orders_info = Ticket.objects.aggregate(spent_money=Sum("price", filter=Q(tk_order__user=user)))
+                orders_info = Ticket.objects.aggregate(spent_money=Sum("price",
+                filter=Q(tk_order__user=user,\
+                        start_date__gte=(timezone.now()- datetime.timedelta(weeks=1)))))
                 tickets = Ticket.objects.filter(Q(start_date__gte=(timezone.now()\
                 - datetime.timedelta(weeks=1))),Q(tk_order__user=user)).order_by("-start_date")
             elif data == "2":
-                orders_info = Ticket.objects.aggregate(spent_money=Sum("price", filter=Q(tk_order__user=user)))
+                orders_info = Ticket.objects.aggregate(spent_money=Sum("price",
+                filter=Q(tk_order__user=user,\
+                         start_date__gte=(timezone.now()- datetime.timedelta(days=30)))))
                 tickets = Ticket.objects.filter(Q(start_date__gte=(timezone.now()\
                  - datetime.timedelta(days=30))),Q(tk_order__user=user)).order_by("-start_date")
             elif data == "3":
-                orders_info = Ticket.objects.aggregate(spent_money=Sum("price", filter=Q(tk_order__user=user)))
+                orders_info = Ticket.objects.aggregate(spent_money=Sum("price",
+                filter=Q(tk_order__user=user,\
+                         start_date__gte=(timezone.now()- datetime.timedelta(days=365)))))
                 tickets = Ticket.objects.filter(Q(start_date__gte=(timezone.now()\
                  - datetime.timedelta(days=365))), Q(tk_order__user=user)).order_by("-start_date")
 
