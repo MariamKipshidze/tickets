@@ -5,16 +5,25 @@ from .forms import TicketsSearchForm, OrderCreateForm
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.handlers.wsgi import WSGIRequest
 from django.contrib import messages
 from django.urls import reverse
 
 import datetime
 from django.utils import timezone
 
+@login_required
+def orders(request: WSGIRequest) -> HttpResponse:
+    orders = Order.objects.all()
+
+    return render(request, "tickets_app/orders.html", context={
+        "orders": orders,
+    })
+
 
 @login_required
-def profile(request):
+def profile(request: WSGIRequest) -> HttpResponse:
     user = request.user
     orders = user.order.all()
     tickets_search_form = TicketsSearchForm()
@@ -49,7 +58,7 @@ def profile(request):
 
 
 @login_required
-def order_create(request):
+def order_create(request: WSGIRequest) -> HttpResponse:
     user = request.user
     order_form = OrderCreateForm()
 
