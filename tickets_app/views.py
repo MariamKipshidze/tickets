@@ -1,12 +1,16 @@
 from django.shortcuts import render
-from user.models import User
+from users.models import User
 from .models import Ticket, Order
 from .forms import TicketsSearchForm, OrderCreateForm
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.urls import reverse
 
 import datetime
+from django.utils import timezone
 
 
 @login_required
@@ -14,12 +18,12 @@ def profile(request):
     user = request.user
     orders = user.order.all()
     tickets_search_form = TicketsSearchForm()
-    order_info = {}
+    #order_info = {}
 
     if request.method == "GET":
         tickets_search_form = TicketsSearchForm(request.GET)
         if tickets_search_form.is_valid():
-            data = ticket_search_form.cleaned_data["order_search"]
+            data = tickets_search_form.cleaned_data["order_search"]
             if data == "1":
                 # order_info = user.order.filter(end_date__lte=timezone.now()) \
                 #     .aggregate(
@@ -50,7 +54,7 @@ def order_create(request):
     order_form = OrderCreateForm()
 
     if request.method == "POST":
-        order_form = CarCreateForm(request.POST)
+        order_form = OrderCreateForm(request.POST)
         if order_form.is_valid():
             order = order_form.save(commit=False)
             order.user = user
