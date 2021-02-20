@@ -13,11 +13,21 @@ from django.urls import reverse
 import datetime
 from django.utils import timezone
 from django.db.models import Q, Sum
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 def orders(request: WSGIRequest) -> HttpResponse:
     user = request.user
     orders = Order.objects.filter(user=user)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(orders, 5)
+    try:
+        orders = paginator.page(page)
+    except PageNotAnInteger:
+        orders = paginator.page(1)
+    except EmptyPage:
+        orders = paginator.page(paginator.num_pages)
 
     return render(request, "tickets_app/orders.html", context={
         "orders": orders,
