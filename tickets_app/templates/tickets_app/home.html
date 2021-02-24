@@ -6,7 +6,7 @@
   <article class="media content-section">
       <div class="media-body">
         <div class="article-metadata">
-          <a class="mr-2" href="#"><h2>{{ ticket.name }}</h2></a>
+          <a class="mr-2" href="{% url 'ticket-detail' ticket.id %}">{{ ticket.name }}</a>
         </div>
         <p><strong>Price:</strong> {{ ticket.price }}</p>
         <p>Start date: {{ ticket.start_date }}</p>

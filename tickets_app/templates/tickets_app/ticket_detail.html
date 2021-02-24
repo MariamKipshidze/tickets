@@ -1,0 +1,15 @@
+{% extends "tickets_app/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <h1>{{ object.name}}</h1>
+        <small class="text-muted">{{ object.start_date|date:"F d, Y" }}</small>
+        <small class="text-muted">{{ object.end_date|date:"F d, Y" }}</small>
+        <h2 class="article-title" >{{ object.price }}</h2>
+        <p class="article-content">{{ object.barcode }}</p>
+      </div>
+    </div>
+</article>
+{% endblock content%}

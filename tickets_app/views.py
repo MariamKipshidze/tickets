@@ -15,7 +15,7 @@ from django.utils import timezone
 from django.db.models import Q, Sum
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 
 class TicketsListView(ListView):
@@ -23,6 +23,10 @@ class TicketsListView(ListView):
     template_name = "tickets_app/home.html"
     context_object_name = "tickets"
     paginate_by = 5
+
+
+class TicketDetailview(DetailView):
+    model = Ticket
 
 
 @login_required
