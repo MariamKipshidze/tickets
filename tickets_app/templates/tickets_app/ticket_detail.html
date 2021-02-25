@@ -10,6 +10,14 @@
         <h2 class="article-title" >{{ object.price }}</h2>
         <p class="article-content">{{ object.barcode }}</p>
       </div>
+      {% if user.is_authenticated %}
+        <form method = "POST">
+          {% csrf_token %}
+          <div class = "form-group">
+              <button class = "btn btn-outline-info" type = "submit">Buy</button>
+          </div>
+        </form>
+      {% endif %}
     </div>
 </article>
 {% endblock content%}

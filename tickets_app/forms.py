@@ -10,3 +10,9 @@ class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ["ticket"]
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = []

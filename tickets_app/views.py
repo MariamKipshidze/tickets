@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from users.models import User
 from .models import Ticket, Order
-from .forms import TicketsSearchForm, OrderCreateForm
+from .forms import TicketsSearchForm, OrderCreateForm, OrderForm
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -27,6 +27,28 @@ class TicketsListView(ListView):
 
 class TicketDetailview(DetailView):
     model = Ticket
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_form'] = OrderForm()
+        return context
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        order_form = OrderForm(request.POST)
+        if order_form.is_valid():
+            order = order_form.save(commit=False)
+            order.user = request.user
+            order.ticket_id = kwargs["pk"]
+            if order.user.balance - order.ticket.price > 0:
+                order.user.balance = order.user.balance - order.ticket.price
+                order.save()
+                order.user.save()
+                messages.success(request, f"Successfully completed")
+            else:
+                messages.warning(request, f"There is not enough money on your balance")
+
+        return redirect(to='ticket-detail', **kwargs)
 
 
 @login_required
@@ -105,7 +127,7 @@ def order_create(request: WSGIRequest) -> HttpResponse:
             if user.balance - order.ticket.price > 0:
                 user.balance = user.balance - order.ticket.price
                 user.save()
-                order.save
+                order.save()
                 messages.success(request, f"Successfully completed")
             else:
                 messages.warning(request, f"There is not enough money on your balance")
