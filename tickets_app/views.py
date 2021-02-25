@@ -15,8 +15,8 @@ from django.utils import timezone
 from django.db.models import Q, Sum
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from django.views.generic import ListView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class TicketsListView(ListView):
@@ -54,6 +54,25 @@ class TicketDetailview(DetailView):
 
 class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
+
+
+class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Order
+    success_url = "/orders/"
+
+    def test_func(self):
+        order = self.get_object()
+        if self.request.user == order.user:
+            return True
+        return False
+
+    def post(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.user.balance = order.user.balance + order.ticket.price
+        order.user.save()
+        messages.success(request, f"Successfully deleted")
+
+        return self.delete(request, *args, **kwargs)
 
 
 @login_required
