@@ -10,7 +10,7 @@
 </form>
   {% for order in orders %}
       <div class = "content-section">
-          <p>{{order.ticket}}</p>
+          <h4><a href="{% url 'order-detail' order.id %}">{{order.ticket}}</a></h4>
       </div>
   {% endfor %}
 

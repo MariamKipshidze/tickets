@@ -16,6 +16,7 @@ from django.db.models import Q, Sum
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class TicketsListView(ListView):
@@ -49,6 +50,10 @@ class TicketDetailview(DetailView):
                 messages.warning(request, f"There is not enough money on your balance")
 
         return redirect(to='ticket-detail', **kwargs)
+
+
+class OrderDetailView(LoginRequiredMixin, DetailView):
+    model = Order
 
 
 @login_required
