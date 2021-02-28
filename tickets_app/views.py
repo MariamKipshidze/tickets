@@ -19,6 +19,20 @@ from django.views.generic import ListView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
+class UsersListView(ListView):
+    model = User
+    template_name = "tickets_app/users_list.html"
+    context_object_name = "users"
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            users = User.objects.filter(email__icontains=query)
+        else:
+            users = User.objects.all()
+        return users
+
+
 class TicketsListView(ListView):
     model = Ticket
     template_name = "tickets_app/home.html"

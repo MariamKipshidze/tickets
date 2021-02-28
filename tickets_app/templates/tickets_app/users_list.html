@@ -1,0 +1,17 @@
+{% extends "tickets_app/base.html" %}
+{% block content %}
+
+<form method="GET" action="">
+  Search user by email
+  <div class = "form-group">
+      <input class = "textinput textInput form-control" id="search_order" type="text" name="q" value="{{ request.GET.q }}">
+      <button class = "btn btn-outline-info" >Search</button>
+  </div>
+</form>
+  {% for user in users %}
+      <div class = "content-section">
+          <h4><a href="#">{{user.email}}</a></h4>
+      </div>
+  {% endfor %}
+
+{% endblock content%}
